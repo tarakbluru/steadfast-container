@@ -1,0 +1,68 @@
+================================================================================
+  STEADFAST MONOREPO - PODMAN CONTAINER SETUP
+  For Windows with Podman Desktop
+================================================================================
+
+PREREQUISITES:
+--------------
+1. Windows 10/11
+2. Podman Desktop installed (https://podman.io/downloads)
+3. At least 3 GB free disk space
+
+INSTALLATION:
+-------------
+1. Extract all files to a folder (e.g., C:\steadfast-container)
+
+2. Open Command Prompt or PowerShell in that folder
+
+3. Build the container image (FIRST TIME ONLY):
+
+   build.bat
+
+   This takes 5-15 minutes and downloads ~2 GB
+   You only need to do this once!
+
+USAGE:
+------
+1. Start the container:
+
+   run.bat
+
+   Wait 30-60 seconds for services to start
+
+2. Open your browser:
+
+   http://localhost:5173
+
+   This is the Steadfast web interface
+
+3. Select your broker (Flattrade or Shoonya) and login
+
+4. When done, stop the container:
+
+   stop.bat
+
+UPDATING:
+---------
+When steadfast releases updates:
+
+1. stop.bat
+2. build.bat (rebuilds with latest code)
+3. run.bat
+
+TROUBLESHOOTING:
+----------------
+- Container won't start: Run build.bat first
+- Port errors: Make sure ports 3000, 5173, 8765, 8766 are free
+- Service errors: Check logs with: podman logs steadfast-container
+
+FULL DOCUMENTATION:
+-------------------
+See README-CONTAINER.md for detailed instructions
+
+SUPPORT:
+--------
+Steadfast App: https://t.me/steadfastapp
+Original Repo: https://github.com/narenkram/steadfast-monorepo
+
+================================================================================
