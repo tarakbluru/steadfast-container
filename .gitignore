@@ -1,0 +1,19 @@
+# Podman/Docker artifacts
+*.tar
+*.tar.gz
+*.7z
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
