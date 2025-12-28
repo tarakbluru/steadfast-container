@@ -1,5 +1,5 @@
 @echo off
-REM Stop script for Steadfast container
+REM Stop script for Steadfast container (preserves container data)
 
 echo ========================================
 echo Stopping Steadfast Container
@@ -15,9 +15,12 @@ if %ERRORLEVEL% NEQ 0 (
     REM Check if container exists but is stopped
     podman ps -a | findstr steadfast-container >nul
     if %ERRORLEVEL% EQU 0 (
-        echo Removing stopped container...
-        podman rm steadfast-container
-        echo Done.
+        echo Container already stopped.
+        echo.
+        echo Use run.bat to start it again.
+    ) else (
+        echo No container found.
+        echo Use run.bat to create and start it.
     )
     echo.
     pause
@@ -28,16 +31,15 @@ echo Stopping container...
 podman stop steadfast-container
 
 if %ERRORLEVEL% EQU 0 (
-    echo Removing container...
-    podman rm steadfast-container
-
     echo.
     echo ========================================
-    echo Container stopped and removed successfully!
+    echo Container stopped successfully!
     echo ========================================
     echo.
-    echo The container image is still available.
+    echo Container data preserved (including broker connections).
     echo Use run.bat to start it again.
+    echo.
+    echo To remove container completely: podman rm steadfast-container
     echo.
 ) else (
     echo.

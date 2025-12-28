@@ -91,9 +91,20 @@ This container setup includes all three components of the Steadfast stack:
 When Steadfast releases updates:
 
 ```powershell
-.\stop.bat      # Stop current container
-.\build.bat     # Rebuild with latest code
-.\run.bat       # Run updated version
+.\stop.bat                        # Stop current container
+podman rm steadfast-container     # Remove old container
+.\build.bat                       # Rebuild with latest code
+.\run.bat                         # Run updated version
+```
+
+### Starting Fresh (Remove All Data)
+
+If you want to completely reset and remove all saved data:
+
+```powershell
+.\stop.bat                        # Stop container
+podman rm steadfast-container     # Remove container and all data
+.\run.bat                         # Create fresh container
 ```
 
 ---
@@ -174,8 +185,8 @@ The container exposes these ports to your localhost:
 
 ✅ **Zero Desktop Pollution** - No Node.js, Python, or dependencies on your system
 ✅ **Complete Isolation** - Everything runs in a container
-✅ **Fresh Start** - Clean state every time (no credential persistence)
-✅ **Easy Updates** - Just rebuild the image
+✅ **Persistent Connections** - Broker connections saved between restarts
+✅ **Easy Updates** - Just rebuild the image when needed
 ✅ **Cross-Platform Ready** - Works on any Windows machine with Podman/Docker
 ✅ **Safe** - Can't mess up your system configuration
 
@@ -255,7 +266,7 @@ podman rmi steadfast-app:latest
 
 ## ⚠️ Important Notes
 
-- **Fresh Start Policy:** This container does NOT persist login credentials or session data. You'll need to login fresh each time you run it.
+- **Data Persistence:** Container data (including broker connections) is preserved between stops and starts. Use `podman rm steadfast-container` to remove completely and start fresh.
 - **Development vs Production:** The container runs in production mode for better performance and proper network binding.
 - **Original Project:** This is a containerized wrapper for [steadfast-monorepo](https://github.com/narenkram/steadfast-monorepo). All credit for the application goes to the original developers.
 
