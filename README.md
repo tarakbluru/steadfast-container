@@ -100,6 +100,43 @@ When Steadfast releases updates:
 
 ## 🔧 Troubleshooting
 
+### Error: "/app/startup.sh: not found" when starting container
+
+This is a **line ending issue** that occurs on Windows systems. The error happens when `startup.sh` has Windows-style line endings (CRLF) instead of Unix-style (LF).
+
+**Solution:**
+
+1. **Verify the issue:**
+   ```powershell
+   git ls-files --eol startup.sh
+   ```
+   If you see `w/crlf` instead of `w/lf`, you need to fix it.
+
+2. **Fix the line endings:**
+   ```powershell
+   # Disable Git's autocrlf conversion for this repository
+   git config core.autocrlf false
+
+   # Force Git to refresh files with correct line endings
+   git rm --cached -r .
+   git reset --hard HEAD
+   ```
+
+3. **Verify the fix:**
+   ```powershell
+   git ls-files --eol startup.sh
+   # Should now show: i/lf    w/lf
+   ```
+
+4. **Rebuild the container:**
+   ```powershell
+   .\build.bat
+   .\stop.bat
+   .\run.bat
+   ```
+
+**Why this happens:** Git's `core.autocrlf` setting can convert line endings when checking out files on Windows, which breaks Linux shell scripts inside the container.
+
 ### Container won't start
 - **Solution:** Make sure you ran `build.bat` first
 
